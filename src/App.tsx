@@ -2,7 +2,6 @@ import { useState } from "react";
 import Random from "./utils/Random";
 import "./App.css";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { table } from "console";
 
 function App() {
   const studentsInitialState = Random();
