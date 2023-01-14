@@ -26,79 +26,158 @@ function App() {
 
   const [students, setStudents] = useState(studentsInitialState);
 
-  const reorder = (list: Array<any>, startIndex: number, endIndex: number) => {
-    const result = [...list];
+  const reorder = (list: any, startIndex: any, endIndex: any) => {
+    const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
+
     return result;
   };
 
-  return (
-    <DragDropContext
-      onDragEnd={(result) => {
-        const { source, destination } = result;
-        if (
-          !destination ||
-          (source.index === destination.index &&
-            source.droppableId === destination.droppableId)
-        )
-          return;
-        setStudents((prevStudent) =>
-          reorder(prevStudent, source.index, destination.index)
+  const onDragEnd = (result: any) => {
+    if (!result.destination) {
+      return;
+    }
+
+    if (result.destination.droppableId === result.source.droppableId) {
+      if (result.destination.droppableId === "students-left") {
+        const items = reorder(
+          students.columnLeft,
+          result.source.index,
+          result.destination.index
         );
-      }}
-    >
-      <div className="App-container">
-        <Droppable droppableId="students-left">
-          {(droppableProvided) => (
-            <ul
-              {...droppableProvided.droppableProps}
-              ref={droppableProvided.innerRef}
-              className="App"
-            >
-              {students.map((student, index) => {
-                return (
-                  <Draggable
-                    key={student.name}
-                    draggableId={student.name}
-                    index={index}
-                  >
-                    {(draggableProvided) => (
-                      <li
-                        {...draggableProvided.draggableProps}
-                        ref={draggableProvided.innerRef}
-                        {...draggableProvided.dragHandleProps}
-                        className={`student student-${index + 1}`}
-                      >
-                        <p>{`${student.name}`}</p>
-                        <img src={student.img} alt={`${student.name}`} />
-                      </li>
-                    )}
-                  </Draggable>
-                );
-              })}
 
-              {teachers.map((teacher, index) => {
-                return (
-                  <li
-                    key={teacher.name}
-                    className={`teacher teacher-${index + 1}`}
-                  >
-                    <p>{`${teacher.name}`}</p>
-                    <img src={teacher.img} alt={`${teacher.name}`} />
-                  </li>
-                );
-              })}
+        setStudents({ ...students, columnLeft: items as never });
+      } else {
+        const items = reorder(
+          students.columnRight,
+          result.source.index,
+          result.destination.index
+        );
 
-              {new Array(10).fill(0).map((_status, index) => {
-                return (
-                  <li key={index} className={`table table-${index + 1}`} />
-                );
-              })}
-              {droppableProvided.placeholder}
-            </ul>
-          )}
-        </Droppable>
+        setStudents({ ...students, columnRight: items as never });
+      }
+    } else {
+      if (result.source.droppableId === "students-left") {
+        const [removed] = students.columnLeft.splice(result.source.index, 1);
+        students.columnRight.splice(result.destination.index, 0, removed);
+
+        setStudents({
+          ...students,
+          columnLeft: students.columnLeft,
+          columnRight: students.columnRight,
+        });
+      } else {
+        const [removed] = students.columnRight.splice(result.source.index, 1);
+        students.columnLeft.splice(result.destination.index, 0, removed);
+
+        setStudents({
+          ...students,
+          columnLeft: students.columnLeft,
+          columnRight: students.columnRight,
+        });
+      }
+    }
+  };
+
+  return (
+    <DragDropContext onDragEnd={onDragEnd}>
+      <div className="App">
+        <div className="container">
+          <div className="students">
+            <Droppable droppableId="students-left">
+              {(provided) => (
+                <div
+                  className="students__left"
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                >
+                  {students.columnLeft.map((student, index) => (
+                    <Draggable
+                      key={student.name}
+                      draggableId={student.name}
+                      index={index}
+                    >
+                      {(provided) => (
+                        <div
+                          key={student.name}
+                          className={`student`}
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                        >
+                          <img
+                            src={
+                              student.img
+                                ? student.img
+                                : "https://www.laguiadelvaron.com/wp-content/uploads/2019/08/historia-del-meme-gato-en-mesa-www.laguiadelvaron-3.jpg"
+                            }
+                            alt=""
+                          />
+                          <p>{student.name}</p>
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+            <Droppable droppableId="students-right">
+              {(provided) => (
+                <div
+                  className="students__right"
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                >
+                  {students.columnRight.map((student, index) => (
+                    <Draggable
+                      key={student.name}
+                      draggableId={student.name}
+                      index={index}
+                    >
+                      {(provided) => (
+                        <div
+                          key={student.name}
+                          className={`student`}
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                        >
+                          <img
+                            src={
+                              student.img
+                                ? student.img
+                                : "https://www.laguiadelvaron.com/wp-content/uploads/2019/08/historia-del-meme-gato-en-mesa-www.laguiadelvaron-3.jpg"
+                            }
+                            alt=""
+                          />
+                          <p>{student.name}</p>
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </div>
+          <div className="teachers">
+            {teachers.map((teacher) => (
+              <div className={`teacher ${teacher.name}`} key={teacher.name}>
+                <img
+                  src={
+                    teacher.img
+                      ? teacher.img
+                      : "https://www.laguiadelvaron.com/wp-content/uploads/2019/08/historia-del-meme-gato-en-mesa-www.laguiadelvaron-3.jpg"
+                  }
+                  alt=""
+                />
+                <p>{teacher.name}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </DragDropContext>
   );

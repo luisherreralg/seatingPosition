@@ -1,5 +1,3 @@
-import { Student } from "./models";
-
 export default function Random() {
   const students = [
     {
@@ -88,15 +86,15 @@ export default function Random() {
     },
   ];
 
+  // const randomStudents = students.sort(() => Math.random() - 0.5);
+  // return randomStudents;
+
   const randomStudents = students.sort(() => Math.random() - 0.5);
-  return randomStudents;
+
+  const splittedStundets = {
+    columnLeft: randomStudents.slice(11),
+    columnRight: randomStudents.slice(0, 11),
+  };
+
+  return splittedStundets;
 }
-
-//   const randomStudents = students.sort(() => Math.random() - 0.5);
-
-//   const splittedStundets = {
-//     columnLeft: randomStudents.slice(11),
-//     columnRight: randomStudents.slice(0, 11),
-//   };
-
-//   return splittedStundets;
