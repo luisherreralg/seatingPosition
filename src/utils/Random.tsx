@@ -44,10 +44,11 @@ export default function Random() {
       name: "Fernando Tarraga",
       img: "https://ca.slack-edge.com/T0SJKHBFZ-U048WNHK3JB-1552d7b39531-512",
     },
-    {
-      name: "Luis Periañez",
-      img: "https://ca.slack-edge.com/T0SJKHBFZ-U049Z1UBH0F-d25af0c83bfe-512",
-    },
+    // ! POR SI LUIS SE VUELVE  A UNIR
+    // {
+    //   name: "Luis Periañez",
+    //   img: "https://ca.slack-edge.com/T0SJKHBFZ-U049Z1UBH0F-d25af0c83bfe-512",
+    // },
     {
       name: "Ryan Leary",
       img: "https://ca.slack-edge.com/T0SJKHBFZ-U04A51Q7HFV-1996b5aed933-512",
@@ -92,8 +93,12 @@ export default function Random() {
   const randomStudents = students.sort(() => Math.random() - 0.5);
 
   const splittedStundets = {
-    columnLeft: randomStudents.slice(11),
-    columnRight: randomStudents.slice(0, 11),
+    columnLeft: randomStudents.slice(10),
+    columnRight: randomStudents.slice(0, 10),
+
+    // ! POR SI LUIS SE VUELVE  A UNIR
+    // columnLeft: randomStudents.slice(11),
+    // columnRight: randomStudents.slice(0, 11),
   };
 
   return splittedStundets;
