@@ -1,5 +1,8 @@
+import { user } from "../Types/user";
+import { danielConstrain, ryanGonzuConstrain } from "./SeatsConstrains";
+
 export default function Random() {
-  const students = [
+  const students: user[] = [
     {
       name: "Antonio Jesús Ruiz",
       img: "https://ca.slack-edge.com/T0SJKHBFZ-U043A0XAJ4Q-dea68d6f29a4-512",
@@ -87,18 +90,14 @@ export default function Random() {
     },
   ];
 
-  // const randomStudents = students.sort(() => Math.random() - 0.5);
-  // return randomStudents;
+  let randomStudents = students.sort(() => Math.random() - 0.5);
 
-  const randomStudents = students.sort(() => Math.random() - 0.5);
+  randomStudents = danielConstrain(randomStudents);
+  randomStudents = ryanGonzuConstrain(randomStudents);
 
   const splittedStundets = {
     columnLeft: randomStudents.slice(10),
     columnRight: randomStudents.slice(0, 10),
-
-    // ! POR SI LUIS SE VUELVE  A UNIR
-    // columnLeft: randomStudents.slice(11),
-    // columnRight: randomStudents.slice(0, 11),
   };
 
   return splittedStundets;

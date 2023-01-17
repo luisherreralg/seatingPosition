@@ -2,10 +2,11 @@ import { useState } from "react";
 import Random from "./utils/Random";
 import "./App.css";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { user } from "./Types/user";
 
 function App() {
   const studentsInitialState = Random();
-  const teachers = [
+  const teachers: user[] = [
     {
       name: "Profe1",
       img: "https://planb.mx/wp-content/uploads/2022/04/FB_IMG_1621909877113-1.jpg",
