@@ -86,7 +86,7 @@ export default function Random() {
     },
     {
       name: "Joseba Ibarlucea",
-      img: "https://ca.slack-edge.com/T0SJKHBFZ-U04B7GXFES2-f345dbb85fb4-512",
+      img: "https://i.kym-cdn.com/photos/images/newsfeed/001/471/100/0e5.jpg",
     },
     {
       name: "Santiago Fernandez",
