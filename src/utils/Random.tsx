@@ -1,5 +1,4 @@
 import { user } from "../Types/user";
-import { danielConstrain } from "./SeatsConstrains";
 
 export default function Random() {
   const students: user[] = [
@@ -91,8 +90,6 @@ export default function Random() {
   ];
 
   let randomStudents = students.sort(() => Math.random() - 0.5);
-
-
 
   const splittedStundets = {
     columnLeft: randomStudents.slice(10),
