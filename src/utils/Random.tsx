@@ -92,7 +92,7 @@ export default function Random() {
 
   let randomStudents = students.sort(() => Math.random() - 0.5);
 
-  randomStudents = danielConstrain(randomStudents);
+
 
   const splittedStundets = {
     columnLeft: randomStudents.slice(10),
